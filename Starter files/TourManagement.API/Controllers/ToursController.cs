@@ -28,22 +28,6 @@ namespace TourManagement.API.Controllers
             return Ok(tours);
         }
 
-
-        //[HttpGet("{tourId}", Name = "GetTour")]
-        //public async Task<IActionResult> GetTour(Guid tourId)
-        //{
-        //    var tourFromRepo = await _tourManagementRepository.GetTour(tourId);
-
-        //    if (tourFromRepo == null)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    var tour = Mapper.Map<Tour>(tourFromRepo);
-
-        //    return Ok(tour);
-        //}        
-
         [HttpGet("{tourId}")]
         [RequestHeaderMatchesMediaType("Accept",
             new[] {"application/vnd.marvin.tour+json"})]
