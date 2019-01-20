@@ -12,8 +12,8 @@ namespace TourManagement.API.Helpers
         private readonly string[] _mediaTypes;
         private readonly string _requestHeaderToMatch;
 
-        public RequestHeaderMatchesMediaTypeAttribute(string[] mediaTypes,
-            string requestHeaderToMatch)
+        public RequestHeaderMatchesMediaTypeAttribute(string requestHeaderToMatch, 
+            string[] mediaTypes)
         {
             _mediaTypes = mediaTypes;
             _requestHeaderToMatch = requestHeaderToMatch;
