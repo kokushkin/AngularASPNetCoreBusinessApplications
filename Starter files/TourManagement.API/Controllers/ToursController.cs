@@ -19,6 +19,7 @@ namespace TourManagement.API.Controllers
             _tourManagementRepository = tourManagementRepository;
         }
         
+
         [HttpGet]
         public async Task<IActionResult> GetTours()
         {
@@ -28,13 +29,66 @@ namespace TourManagement.API.Controllers
             return Ok(tours);
         }
 
-        [HttpGet("{tourId}")]
+
+        [HttpPost]
+        [RequestHeaderMatchesMediaType("Content-Type",
+            new[] { "application/vnd.marvin.tourforcreation+json" })]
+        public async Task<IActionResult> AddTour([FromBody] TourForCreation tour)
+        {
+            if (tour == null)
+            {
+                return BadRequest();
+            }
+
+            return await AddSpecificTour(tour);
+        }
+
+
+        [HttpPost]
+        [RequestHeaderMatchesMediaType("Content-Type",
+            new[] { "application/vnd.marvin.tourwithmanagerforcreation+json" })]
+        public async Task<IActionResult> AddTourWithManager([FromBody] TourWithManagerForCreation tour)
+        {
+            if (tour == null)
+            {
+                return BadRequest();
+            }
+
+            return await AddSpecificTour(tour);
+        }
+
+
+        public async Task<IActionResult> AddSpecificTour<T>(T tour) where T : class
+        {
+            var tourEntity = Mapper.Map<Entities.Tour>(tour);
+
+            if (tourEntity.ManagerId == Guid.Empty)
+            {
+                tourEntity.ManagerId = new Guid("fec0a4d6-5830-4eb8-8024-272bd5d6d2bb");
+            }
+
+            await _tourManagementRepository.AddTour(tourEntity);
+
+            if (!await _tourManagementRepository.SaveAsync())
+            {
+                throw new Exception("Adding a tour failed on save");
+            }
+
+            var tourToReturn = Mapper.Map<Tour>(tourEntity);
+
+            return CreatedAtRoute("GetTour", new {tourId = tourToReturn.TourId},
+                tourToReturn);
+        }
+
+
+        [HttpGet("{tourId}", Name = "GetTour")]
         [RequestHeaderMatchesMediaType("Accept",
-            new[] {"application/vnd.marvin.tour+json"})]
+            new[] { "application/vnd.marvin.tour+json" })]
         public async Task<IActionResult> GetTour(Guid tourId)
         {
             return await GetSpecificTour<Tour>(tourId);
         }
+        
 
         [HttpGet("{tourId}")]
         [RequestHeaderMatchesMediaType("Accept",
@@ -43,6 +97,7 @@ namespace TourManagement.API.Controllers
         {
             return await GetSpecificTour<TourWithEstimatedProfits>(tourId);
         }
+
 
         private async Task<IActionResult> GetSpecificTour<T>(Guid tourId) where T : class
         {
