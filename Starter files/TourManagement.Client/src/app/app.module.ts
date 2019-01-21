@@ -40,12 +40,12 @@ import { WriteOutJsonInterceptor } from './shared/write-out-json-interceptor';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [   
+  providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: WriteOutJsonInterceptor,
       multi: true
-    },    
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HandleHttpErrorInterceptor,
@@ -59,6 +59,17 @@ export class AppModule {
   constructor() {
 
     // automapper mappings
+
+    automapper.createMap('TourFormModel', 'TourForCreation')
+      .forSourceMember('band', (opts: AutoMapperJs.ISourceMemberConfigurationOptions) => { opts.ignore(); })
+      .forSourceMember('manager', (opts: AutoMapperJs.ISourceMemberConfigurationOptions) => { opts.ignore(); })
+      .forMember('bandid', function (opts) { opts.mapFrom('band'); });
+
+    automapper.createMap('TourFormModel', 'TourWithManagerForCreation')
+      .forSourceMember('band', (opts: AutoMapperJs.ISourceMemberConfigurationOptions) => { opts.ignore(); })
+      .forSourceMember('manager', (opts: AutoMapperJs.ISourceMemberConfigurationOptions) => { opts.ignore(); })
+      .forMember('bandid', function (opts) { opts.mapFrom('band'); })
+      .forMember('managerid', function (opts) { opts.mapFrom('manager'); });
 
   }
 }
