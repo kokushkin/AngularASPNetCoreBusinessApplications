@@ -111,10 +111,27 @@ namespace TourManagement.API.Controllers
             return await GetSpecificTour<TourWithEstimatedProfits>(tourId);
         }
 
-
-        private async Task<IActionResult> GetSpecificTour<T>(Guid tourId) where T : class
+        [HttpGet("{tourId}")]
+        [RequestHeaderMatchesMediaType("Accept",
+            new[] { "application/vnd.marvin.tourwithshows+json" })]
+        public async Task<IActionResult> GetTourWithShows(Guid tourId)
         {
-            var tourFromRepo = await _tourManagementRepository.GetTour(tourId);
+            return await GetSpecificTour<TourWithEstimatedProfits>(tourId, true);
+        }
+
+        [HttpGet("{tourId}")]
+        [RequestHeaderMatchesMediaType("Accept",
+            new[] { "application/vnd.marvin.tourwithestimatedprofitsandshows+json" })]
+        public async Task<IActionResult> GetTourWithEstimatedProfitsAndShows(Guid tourId)
+        {
+            return await GetSpecificTour<TourWithEstimatedProfitsAndShows>(tourId, true);
+        }
+
+
+        private async Task<IActionResult> GetSpecificTour<T>(Guid tourId,
+            bool includeShows = false) where T : class
+        {
+            var tourFromRepo = await _tourManagementRepository.GetTour(tourId, includeShows);
 
             if (tourFromRepo == null)
             {
