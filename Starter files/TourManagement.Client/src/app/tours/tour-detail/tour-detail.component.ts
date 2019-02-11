@@ -31,13 +31,13 @@ export class TourDetailComponent implements OnInit, OnDestroy {
         this.tourId = params['tourId'];
 
         if(this.isAdmin === true){
-          this.tourService.getTourWirhEstimatedProfits(this.tourId)
+          this.tourService.getTourWithEstimatedProfitsAndShows(this.tourId)
           .subscribe(tour => {
             this.tour = tour;  
           });
         }
         else{
-          this.tourService.getTour(this.tourId)
+          this.tourService.getTourWithShows(this.tourId)
           .subscribe(tour => {
             this.tour = tour;  
           });
