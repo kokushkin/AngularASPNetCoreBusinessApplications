@@ -18,7 +18,7 @@ export class ShowSingleComponent implements OnInit {
   static createShow() {
     return new FormGroup(
       {
-        dateAndTime: new FormControl([]),
+        date: new FormControl([]),
         venue: new FormControl([]),
         city: new FormControl([]),
         country: new FormControl([])

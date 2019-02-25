@@ -88,7 +88,10 @@ export class AppModule {
       .forSourceMember('band', (opts: AutoMapperJs.ISourceMemberConfigurationOptions) => { opts.ignore(); })
       .forSourceMember('manager', (opts: AutoMapperJs.ISourceMemberConfigurationOptions) => { opts.ignore(); })
       .forMember('bandid', function (opts) { opts.mapFrom('band'); })
-      .forMember('managerid', function (opts) { opts.mapFrom('manager'); })
+      .forMember('managerid', function (opts) { opts.mapFrom('manager'); });
+
+    automapper.createMap('ShowCollectionFormModelShowsArray', 
+      'ShowCollectionForCreation');
 
   }
 }
