@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common'
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { TourForUpdate } from '../shared/tour-for-update.model';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class TourUpdateComponent implements OnInit, OnDestroy {
   private tour: Tour;
   private tourId: string;
   private sub: Subscription;
+  private originalTourForUpdate: TourForUpdate;
 
   constructor(private masterDataService: MasterDataService,
     private tourService: TourService,
