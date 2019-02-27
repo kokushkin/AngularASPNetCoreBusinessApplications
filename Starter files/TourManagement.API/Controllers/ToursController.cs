@@ -178,7 +178,7 @@ namespace TourManagement.API.Controllers
 
             var tourToPatch = Mapper.Map<TourForUpdate>(tourFromRepo);
 
-            jsonPatchDocument.ApplyTo(tourToPatch, ModelState);
+            jsonPatchDocument.ApplyTo(tourToPatch);
 
             Mapper.Map(tourToPatch, tourFromRepo);
 
