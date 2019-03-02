@@ -39,17 +39,6 @@ namespace TourManagement.API.Controllers
                 "application/vnd.marvin.tourforcreation+json" })]
         public async Task<IActionResult> AddTour([FromBody] TourForCreation tour)
         {
-            if (tour == null)
-            {
-                return BadRequest();
-            }
-
-            if(!(tour.StartDate < tour.EndDate))
-            {
-                ModelState.AddModelError(nameof(tour),
-                    "A tour must start before it can end.");
-            }
-
             return await AddSpecificTour(tour);
         }
 
@@ -59,17 +48,17 @@ namespace TourManagement.API.Controllers
             new[] { "application/vnd.marvin.tourwithmanagerforcreation+json" })]
         public async Task<IActionResult> AddTourWithManager([FromBody] TourWithManagerForCreation tour)
         {
-            if (tour == null)
-            {
-                return BadRequest();
-            }
-
             return await AddSpecificTour(tour);
         }
 
 
         public async Task<IActionResult> AddSpecificTour<T>(T tour) where T : class
         {
+            if (tour == null)
+            {
+                return BadRequest();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest();
