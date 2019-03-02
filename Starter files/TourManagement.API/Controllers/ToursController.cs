@@ -44,6 +44,12 @@ namespace TourManagement.API.Controllers
                 return BadRequest();
             }
 
+            if(!(tour.StartDate < tour.EndDate))
+            {
+                ModelState.AddModelError(nameof(tour),
+                    "A tour must start before it can end.");
+            }
+
             return await AddSpecificTour(tour);
         }
 
