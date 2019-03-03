@@ -35,9 +35,9 @@ export class TourUpdateComponent implements OnInit, OnDestroy {
     // define the tourForm (with empty default values)
     this.tourForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.maxLength(200)]],
-      description: ['', Validators.required],
-      startDate: [],
-      endDate: []
+      description: ['', [Validators.required, Validators.maxLength(2000)]],
+      startDate: [, Validators.required],
+      endDate: [, Validators.required]
     }, { validator: CustomValidators.StartDateBeforeEndDateValidator });
  
     // get route data (tourId)

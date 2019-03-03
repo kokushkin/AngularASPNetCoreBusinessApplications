@@ -30,12 +30,12 @@ export class TourAddComponent implements OnInit {
 
     // define the tourForm (with empty default values)
     this.tourForm = this.formBuilder.group({
-      band: [''],
+      band: ['', Validators.required],
       manager: [''],
       title: ['', [Validators.required, Validators.maxLength(200)]],
-      description: [''],
-      startDate: [],
-      endDate: [],
+      description: ['', Validators.maxLength(2000)],
+      startDate: [, Validators.required],
+      endDate: [, Validators.required],
       shows: this.formBuilder.array([])
     }, { validator: CustomValidators.StartDateBeforeEndDateValidator });
 
