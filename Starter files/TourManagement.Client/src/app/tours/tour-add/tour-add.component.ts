@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Manager } from '../../shared/manager.model';
 import { ShowSingleComponent } from '../shows/show-single/show-single.component';
 import { CustomValidators } from '../../shared/custom-validators';
+import { ValidationErrorHandler } from '../../shared/validation-error-handler';
 
 @Component({
   selector: 'app-tour-add',
@@ -60,6 +61,8 @@ export class TourAddComponent implements OnInit {
     showsFromArray.push(ShowSingleComponent.createShow());
   }
 
+
+
   addTour(): void {
     if (this.tourForm.dirty && this.tourForm.valid) {
       if (this.isAdmin === true) {
@@ -72,7 +75,10 @@ export class TourAddComponent implements OnInit {
             .subscribe(
               () => {
                 this.router.navigateByUrl('/tours');
-              });
+              },
+              (validationResult) => 
+                { ValidationErrorHandler.handleValidationErrors(this.tourForm, validationResult); }
+              );
         }
         else {
           let tour = automapper.map(
@@ -83,7 +89,9 @@ export class TourAddComponent implements OnInit {
             .subscribe(
               () => {
                 this.router.navigateByUrl('/tours');
-              });
+              },
+              (validationResult) => 
+              { ValidationErrorHandler.handleValidationErrors(this.tourForm, validationResult); });
         }
       }
       else {
@@ -96,7 +104,9 @@ export class TourAddComponent implements OnInit {
             .subscribe(
               () => {
                 this.router.navigateByUrl('/tours');
-              });
+              },
+              (validationResult) => 
+              { ValidationErrorHandler.handleValidationErrors(this.tourForm, validationResult); });
         }
         else {
           let tour = automapper.map(
@@ -107,7 +117,9 @@ export class TourAddComponent implements OnInit {
             .subscribe(
               () => {
                 this.router.navigateByUrl('/tours');
-              });
+              },
+              (validationResult) => 
+              { ValidationErrorHandler.handleValidationErrors(this.tourForm, validationResult); });
         }
       }
     }
