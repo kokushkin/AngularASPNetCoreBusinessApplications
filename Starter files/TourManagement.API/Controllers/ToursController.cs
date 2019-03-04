@@ -57,7 +57,7 @@ namespace TourManagement.API.Controllers
             if (tour == null)
             {
                 return BadRequest();
-            }
+            }            
 
             if (!ModelState.IsValid)
             {

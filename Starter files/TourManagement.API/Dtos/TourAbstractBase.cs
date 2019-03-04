@@ -24,7 +24,7 @@ namespace TourManagement.API.Dtos
             if(!(StartDate < EndDate))
             {
                 yield return new ValidationResult(
-                    "The start date should be smaller than the end date.",
+                    "startDateBeforeEndDate|The start date should be smaller than the end date.",
                     new[] { "Tour" });
             }
         }
