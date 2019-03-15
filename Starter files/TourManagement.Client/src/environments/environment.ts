@@ -11,6 +11,7 @@ export const environment = {
     client_id: 'tourmanagementclient',
     redirect_uri: 'https://localhost:4200/signin-oidc',
     scope: 'openid profile roles',
-    response_type: 'id_token'
+    response_type: 'id_token',
+    post_logout_direct_uri: 'https://localhost:4200/',
   }
 };
