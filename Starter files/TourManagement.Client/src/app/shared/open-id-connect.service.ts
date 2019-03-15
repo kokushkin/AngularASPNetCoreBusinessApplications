@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import {UserManager, User} from 'oidc-client';
 import { environment } from '../../environments/environment';
+import {ReplaySubject} from 'rxjs/ReplaySubject';
 
 @Injectable()
 export class OpenIdConnectService {
 
   private userManager: UserManager = new UserManager(environment.openIdConnectSettings);
   private currentUser: User;
+
+
+  userLoaded$ = new ReplaySubject<boolean>(1);
 
   get userAvailable(): boolean {
     return this.currentUser != null;
@@ -24,6 +28,7 @@ export class OpenIdConnectService {
         console.log('User loaded.', user);
       }
       this.currentUser = user;
+      this.userLoaded$.next(true);
     });
 
     this.userManager.events.addUserUnloaded((e) => {
@@ -31,6 +36,8 @@ export class OpenIdConnectService {
         console.log('User unloaded');
       }
       this.currentUser = null;
+      this.userLoaded$.next(false);
+
     });
   }
 
