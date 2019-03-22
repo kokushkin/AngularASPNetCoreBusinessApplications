@@ -26,6 +26,7 @@ import { ShowSingleComponent } from './tours/shows/show-single/show-single.compo
 import { OpenIdConnectService } from './shared/open-id-connect.service';
 import { SigninOidcComponent } from './signin-oidc/signin-oidc.component';
 import { RequreAuthenticatedUserRouteGuardService } from './shared/requre-authenticated-user-route-guard.service';
+import { AddAuthorizationHeaderInterceptor } from './shared/add-authorization-header-interceptor';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,12 @@ import { RequreAuthenticatedUserRouteGuardService } from './shared/requre-authen
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [    
+  providers: [ 
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AddAuthorizationHeaderInterceptor,
+      multi: true
+    },   
     {
       provide: HTTP_INTERCEPTORS,
       useClass: EnsureAcceptHeaderInterceptor,
