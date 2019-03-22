@@ -9,10 +9,12 @@ using TourManagement.API.Dtos;
 using TourManagement.API.Helpers;
 using TourManagement.API.Services;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TourManagement.API.Controllers
 {
     [Route("api/tours")]
+    [Authorize]
     public class ToursController : Controller
     {
         private readonly ITourManagementRepository _tourManagementRepository;

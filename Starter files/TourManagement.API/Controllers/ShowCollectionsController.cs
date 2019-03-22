@@ -8,10 +8,12 @@ using TourManagement.API.Dtos;
 using TourManagement.API.Helpers;
 using TourManagement.API.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TourManagement.API.Controllers
 {
     [Route("api/tours/{tourId}/showcollections")]
+    [Authorize]
     public class ShowCollectionsController : Controller
     {
         private readonly ITourManagementRepository _tourManagementRepository;
