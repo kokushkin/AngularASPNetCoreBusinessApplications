@@ -19,7 +19,7 @@ export class TourDetailComponent implements OnInit, OnDestroy {
   private tourId: string;
   private sub: Subscription;
   private isAdmin: boolean = 
-  (this.openIdConnectService.user.profile.role === "Administrator");;
+   (this.openIdConnectService.user.profile.role === "Administrator");
 
   constructor(private masterDataService: MasterDataService,
     private tourService: TourService,

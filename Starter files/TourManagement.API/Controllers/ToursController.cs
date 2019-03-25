@@ -63,6 +63,7 @@ namespace TourManagement.API.Controllers
 
 
         [HttpPost]
+        [Authorize(Policy = "UserMustBeAdministrator")]
         [RequestHeaderMatchesMediaType("Content-Type",
             new[] { "application/vnd.marvin.tourwithmanagerforcreation+json" })]
         public async Task<IActionResult> AddTourWithManager([FromBody] TourWithManagerForCreation tour)
@@ -141,10 +142,11 @@ namespace TourManagement.API.Controllers
             new[] { "application/vnd.marvin.tourwithshows+json" })]
         public async Task<IActionResult> GetTourWithShows(Guid tourId)
         {
-            return await GetSpecificTour<TourWithEstimatedProfits>(tourId, true);
+            return await GetSpecificTour<TourWithShows>(tourId, true);
         }
 
         [HttpGet("{tourId}")]
+        [Authorize(Policy = "UserMustBeAdministrator")]
         [RequestHeaderMatchesMediaType("Accept",
             new[] { "application/vnd.marvin.tourwithestimatedprofitsandshows+json" })]
         public async Task<IActionResult> GetTourWithEstimatedProfitsAndShows(Guid tourId)
