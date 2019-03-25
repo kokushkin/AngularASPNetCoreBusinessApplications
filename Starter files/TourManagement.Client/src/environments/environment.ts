@@ -13,5 +13,7 @@ export const environment = {
     scope: 'openid profile roles tourmanagementapi',
     response_type: 'id_token token',
     post_logout_direct_uri: 'https://localhost:4200/',
+    autmaticSilentRenew: true,
+    silent_redirect_uri: 'https://localhost:4200/redirect-silentrenew'
   }
 };

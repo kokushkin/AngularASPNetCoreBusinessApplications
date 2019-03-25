@@ -70,7 +70,7 @@ namespace Marvin.IDP
                     RedirectUris =new List<string>
                     {
                         "https://localhost:4200/signin-oidc",
-                        //"https://localhost:4200/redirect-silentrenew"
+                        "https://localhost:4200/redirect-silentrenew"
                     },
                     AccessTokenLifetime = 180,
                     PostLogoutRedirectUris = new[]{

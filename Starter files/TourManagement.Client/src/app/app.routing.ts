@@ -9,6 +9,7 @@ import { ShowAddComponent } from './tours/shows/index';
 import { SigninOidcComponent } from './signin-oidc/signin-oidc.component';
 
 import { RequreAuthenticatedUserRouteGuardService } from './shared/requre-authenticated-user-route-guard.service';
+import { RedirectSilentRenewComponent } from './redirect-silent-renew/redirect-silent-renew.component';
 
 const routes: Routes = [
     // redirect root to the dasbhoard route
@@ -25,8 +26,9 @@ const routes: Routes = [
     canActivate: [RequreAuthenticatedUserRouteGuardService] },  
     { path: 'tours/:tourId/show-add', component: ShowAddComponent,
     canActivate: [RequreAuthenticatedUserRouteGuardService] },
-    { path: 'signin-oidc', component: SigninOidcComponent}
+    { path: 'signin-oidc', component: SigninOidcComponent},
   //  { path: '**', redirectTo: 'tours' },
+    {path: 'redirect-silentrenew', component: RedirectSilentRenewComponent}
 ];
 
 // define a module
