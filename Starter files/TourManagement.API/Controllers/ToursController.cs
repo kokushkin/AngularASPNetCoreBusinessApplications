@@ -18,17 +18,34 @@ namespace TourManagement.API.Controllers
     public class ToursController : Controller
     {
         private readonly ITourManagementRepository _tourManagementRepository;
+        private readonly IUserInfoService _userInfoService;
 
-        public ToursController(ITourManagementRepository tourManagementRepository)
+        public ToursController(ITourManagementRepository tourManagementRepository,
+            IUserInfoService userInfoService)
         {
             _tourManagementRepository = tourManagementRepository;
+            _userInfoService = userInfoService;
         }
         
 
         [HttpGet]
         public async Task<IActionResult> GetTours()
         {
-            var toursFromRepo = await _tourManagementRepository.GetTours();
+            IEnumerable<Entities.Tour> toursFromRepo = new List<Entities.Tour>();
+
+            if(_userInfoService.Role == "Administrator")
+            {
+                toursFromRepo = await _tourManagementRepository.GetTours();
+            }
+            else
+            {
+                if(!Guid.TryParse(_userInfoService.UserId, out Guid userIdAsGuid))
+                {
+                    return Forbid();
+                }
+
+                toursFromRepo = await _tourManagementRepository.GetToursForManager(userIdAsGuid);
+            }
 
             var tours = Mapper.Map<IEnumerable<Tour>>(toursFromRepo);
             return Ok(tours);
