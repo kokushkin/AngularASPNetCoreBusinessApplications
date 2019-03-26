@@ -1,4 +1,5 @@
 ﻿using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Linq;
+using TourManagement.API.Authorization;
 using TourManagement.API.Services;
 
 namespace TourManagement.API
@@ -32,7 +34,14 @@ namespace TourManagement.API
                     policyBuilder.RequireAuthenticatedUser();
                     policyBuilder.RequireRole("Administrator");
                 });
+                options.AddPolicy("UserMustBeTourManager", policyBuilder =>
+                {
+                    policyBuilder.RequireAuthenticatedUser();
+                    policyBuilder.AddRequirements(new UserMustBeTourManagerRequirement("Administrator"));
+                });
             });
+
+            services.AddScoped<IAuthorizationHandler, UserMustBeTourManagerRequirementHandler>();
 
             services.AddMvc(setupAction =>
             {
